@@ -72,8 +72,7 @@ object ConfigBuilder {
         dev := {
           val indexFile = baseDirectory.value / entryFile
           val indexContent = IO.read(indexFile)
-          println(s"value : ${scalaJSUseMainModuleInitializer.value}")
-          (fastOptJS).value.data
+          (fastOptJS in config).value.data
           val mainClassRef = (mainClass in Compile).value
             .getOrElse("")
             .split('.')
