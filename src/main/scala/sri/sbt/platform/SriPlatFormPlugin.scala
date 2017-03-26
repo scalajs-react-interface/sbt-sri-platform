@@ -25,11 +25,11 @@ object SriPlatFormPlugin extends AutoPlugin {
     Seq(
       defaultConfiguration := Some(common),
       scalaJSModuleKind := ModuleKind.CommonJSModule,
-      scalaJSUseMainModuleInitializer := true,
       ivyConfigurations := overrideConfigs(ios,
                                            android,
                                            common,
                                            CustomCompile)(
-        ivyConfigurations.value)
+        ivyConfigurations.value),
+      scalaJSUseMainModuleInitializer := true
     ) ++ buildConfig(android) ++ buildConfig(ios)
 }

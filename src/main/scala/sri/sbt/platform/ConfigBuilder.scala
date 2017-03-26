@@ -1,9 +1,11 @@
 package sri.sbt.platform
 
+import org.scalajs.core.tools.linker.backend.ModuleKind
 import sbt.Keys._
 import sbt._
 import org.scalajs.sbtplugin.ScalaJSPlugin.AutoImport._
 import org.scalajs.sbtplugin.ScalaJSPluginInternal
+import org.scalajs.sbtplugin.ScalaJSPluginInternal.scalaJSProjectBaseSettings
 
 object ConfigBuilder {
 
@@ -70,8 +72,15 @@ object ConfigBuilder {
         dev := {
           val indexFile = baseDirectory.value / entryFile
           val indexContent = IO.read(indexFile)
-          (fastOptJS in config).value.data
-          val launcher = s"""require("./$aPath");"""
+          println(s"value : ${scalaJSUseMainModuleInitializer.value}")
+          (fastOptJS).value.data
+          val mainClassRef = (mainClass in Compile).value
+            .getOrElse("")
+            .split('.')
+            .map(s => s"""["$s"]""")
+            .mkString("")
+            .concat("().main()")
+          val launcher = s"""require("./$aPath")${mainClassRef};"""
           if (!indexContent.contains(launcher)) IO.append(indexFile, launcher)
 //          if (!isServerStarted) {
 //            if ((npmStart !) == 0) {
@@ -84,7 +93,13 @@ object ConfigBuilder {
           val indexFile = baseDirectory.value / entryFile
           val indexContent = IO.read(indexFile)
           (fullOptJS in config).value.data
-          val launcher = s"""require("./$aPath");"""
+          val mainClassRef = (mainClass in Compile).value
+            .getOrElse("")
+            .split('.')
+            .map(s => s"""["$s"]""")
+            .mkString("")
+            .concat("().main()")
+          val launcher = s"""require("./$aPath")${mainClassRef};"""
           if (!indexContent.contains(launcher)) IO.append(indexFile, launcher)
         }
       ))

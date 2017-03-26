@@ -1,6 +1,6 @@
 name := "sbt-sri-platform"
 
-//version := "2017.3.23-beta"
+//version := "2017.3.26.1-beta"
 
 scalaVersion := "2.10.6"
 
