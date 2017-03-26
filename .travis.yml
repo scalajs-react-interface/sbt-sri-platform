@@ -1,0 +1,30 @@
+language: scala
+
+scala:
+- 2.10.6
+
+jdk:
+- oraclejdk8
+
+env:
+  global:
+    JSENV=node
+
+script:
+  - sbt ++$TRAVIS_SCALA_VERSION test
+
+
+deploy:
+  provider: script
+  script:
+  - /bin/bash "$TRAVIS_BUILD_DIR/.travis.credentials.sh" && sbt ++$TRAVIS_SCALA_VERSION publish
+  on:
+    tags: true
+
+env:
+  global:
+  # travis encrypt BINTRAY_USER=xxx
+  - secure: "KKeYf4l4dH9Qj8ZIXsS6k1J7ee/2DypgQRCNagJmACshJ8OZ/LEeOts3Y/PrG+eQ0WEzmMty78H7DFle1vxgJo8SDWnCoopxRkxdU1me75hut/rxgf0yLnOD25avRdE8476Z8xg3bhP5yv08ZBn8TI86dZshi7l9EJDRsXFVB+3NImr+C1VlO2QbkZAJdFWWyUcYR1sGrEB1Ddg6tddz75ArHlzE14CiUMEz+fDrFM1KZ2gKjwqZ5NtYWGeUqc0jz9MKuafOrfIYQ72/rfb1hLmj9Omk9T3D8px9B+Q4G6W1n5sPSjVZ1BKOkgUrLbt8VmDP/nC2Y0pXnzu3R5esmc9p9eGrMfT3jrweQ19c7OctVZutQyzxkBxnselXuwxL0rK7BVPR5o0dJ1WLpcjPI7x/AwCTQcQcOVBYKA5UreDMJd1wHZFwiGd+GNtNk1+GSpdAuGQTJl+FznjgeQveERdOxfnTEhziZW19chWYecC2EI/Dqv+xoXi84dvUitCxrnVRo5IHGF/7ROUm+qRkLia0eO6nsV7z9Zq5pyFFAHjD+mqosUtkUnEqVN+bbxNS2WdgDU6o6tfiBdTKrieD3LycW3giTVKkqL0AGZiIiTElsUNtbQCJSkevazeO7q27i/2R9uWKuqMs5yo2RGvkbmfOhVNnv8eqyPO30iFYmmI="
+  # travis encrypt BINTRAY_PASSWORD=xxx
+  - secure: "wYlgXP9vTaM875R37mzYRoRmJ0z6DTbjRxsEo85dqksihPaX8B7yFviwgPqb9TcqioCXepT/zQatYNGvcGoHFUaqW5HpPfbWogUosL9Anv/CYiL13V2jVuca+Z13U/Zde38GorfV+hW+xtt9LTWCBBFJjbEFsN9Hf136aWYdH3ntcsYUaBK60ddY44veuz1BJ8XTm0KVDSixkR6EXlqaQrEf7VbG2g4e78DIugs0pUpDQhJ4DXlwLN8radqXSI3dutUMIqpn1agFfFh3Z4rWN6dy0TPevJrhj430tx+Zp0lqJQhQ4EM6VvQ8aLZPP1Ut0yvmMdl1ugHAxq914QLZ6x2xygGI/3Rei2b4HOoAKFtBLYKjoYL+ZNDoMAG3UoKJrWY19oH3y/q4PHorJhut33NXDyVUNAEiADD9YN69+PiIfxO+4JYeJRrZQAIzqKn3yNGnKLXPHv6RN8OAPtdF4c5syZZ5i9XwOJ5C+jk41fDHHrbAzYBf28UXibY2vymRu7hSnGHTS/Svj2ULdQoPwrNnsnSaLQjAWcj4ZPguKSi+d5vEhTpPZrENuUCLosEH8qY8weCUzH2pAC1E0FTFp6ZNkng1cVq5qrIJMxvKNRBdv6XDd68WX+XPjschie31y6m/rnVc69aVR+DYr5unouLtO1OE2PdBwkJOF3NGLPE="
+
