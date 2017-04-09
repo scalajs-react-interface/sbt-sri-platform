@@ -57,13 +57,15 @@ object ConfigBuilder {
     val aPath = getArtifactPath(config)
     val entryFile = getEntryFileName(config)
     inConfig(config)(
-      ScalaJSPluginInternal.scalaJSConfigSettings ++ Seq(
+      Defaults.compileSettings ++
+        ScalaJSPluginInternal.scalaJSCompileSettings ++ Seq(
         fullClasspath := {
-          (fullClasspath in Compile).value
-          Classpaths
-            .managedJars(config, Set("jar"), update.value) :+ Attributed.blank(
-            (classDirectory in config).value)
+          (fullClasspath in Compile).value //TODO  check this why we need this magic
+          Seq(Attributed.blank((classDirectory in config).value)) ++ Classpaths
+            .managedJars(config, Set("jar"), update.value)
         },
+        discoveredMainClasses := (discoveredMainClasses in Compile).value,
+        mainClass := (mainClass in Compile).value,
         console := (console in Compile).value,
         products := (products in Compile).value,
         classDirectory := (classDirectory in Compile).value,
@@ -73,32 +75,14 @@ object ConfigBuilder {
           val indexFile = baseDirectory.value / entryFile
           val indexContent = IO.read(indexFile)
           (fastOptJS in config).value.data
-          val mainClassRef = (mainClass in Compile).value
-            .getOrElse("")
-            .split('.')
-            .map(s => s"""["$s"]""")
-            .mkString("")
-            .concat("().main()")
-          val launcher = s"""require("./$aPath")${mainClassRef};"""
+          val launcher = s"""require("./$aPath");"""
           if (!indexContent.contains(launcher)) IO.append(indexFile, launcher)
-//          if (!isServerStarted) {
-//            if ((npmStart !) == 0) {
-//              println(s"server started successfully")
-//              isServerStarted = true
-//            }
-//          }
         },
         prod := {
           val indexFile = baseDirectory.value / entryFile
           val indexContent = IO.read(indexFile)
           (fullOptJS in config).value.data
-          val mainClassRef = (mainClass in Compile).value
-            .getOrElse("")
-            .split('.')
-            .map(s => s"""["$s"]""")
-            .mkString("")
-            .concat("().main()")
-          val launcher = s"""require("./$aPath")${mainClassRef};"""
+          val launcher = s"""require("./$aPath");"""
           if (!indexContent.contains(launcher)) IO.append(indexFile, launcher)
         }
       ))
