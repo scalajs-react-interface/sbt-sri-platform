@@ -59,11 +59,6 @@ object ConfigBuilder {
     inConfig(config)(
       Defaults.compileSettings ++
         ScalaJSPluginInternal.scalaJSCompileSettings ++ Seq(
-        fullClasspath := {
-          (fullClasspath in Compile).value //TODO  check this why we need this magic
-          Seq(Attributed.blank((classDirectory in config).value)) ++ Classpaths
-            .managedJars(config, Set("jar"), update.value)
-        },
         discoveredMainClasses := (discoveredMainClasses in Compile).value,
         mainClass := (mainClass in Compile).value,
         console := (console in Compile).value,
