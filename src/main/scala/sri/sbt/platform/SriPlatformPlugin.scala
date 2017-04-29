@@ -10,7 +10,7 @@ import sbt.{AutoPlugin, Global, config, overrideConfigs}
 import sbt._
 import sbt.Keys._
 
-object SriPlatFormPlugin extends AutoPlugin {
+object SriPlatformPlugin extends AutoPlugin {
   override lazy val requires = ScalaJSPlugin
   object autoImport {
     lazy val common = config("common")
