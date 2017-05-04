@@ -15,12 +15,6 @@ object ConfigBuilder {
 
   final val WEB = "web"
 
-  final val PLATFORM_CONFIG_IOS = "platform-config-ios"
-
-  final val PLATFORM_CONFIG_ANDROID = "platform-config-android"
-
-  final val PLATFORM_CONFIG_WEB = "platform-config-web"
-
   final val SJS_OUTPUT_PATH_ANDROID = "assets/scalajs-output-android.js"
 
   final val SJS_OUTPUT_PATH_IOS = "assets/scalajs-output-ios.js"
@@ -43,7 +37,8 @@ object ConfigBuilder {
   def getArtifactPath(config: Configuration) =
     if (config.name == IOS) SJS_OUTPUT_PATH_IOS
     else if (config.name == ANDROID) SJS_OUTPUT_PATH_ANDROID
-    else SJS_OUTPUT_PATH_WEB
+    else if (config.name == WEB) SJS_OUTPUT_PATH_WEB
+    else "assets/scalajs-output-unknown-platform.js"
 
   var isServerStarted: Boolean = false
 

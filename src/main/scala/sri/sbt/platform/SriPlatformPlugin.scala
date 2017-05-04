@@ -16,6 +16,7 @@ object SriPlatformPlugin extends AutoPlugin {
     lazy val common = config("common")
     lazy val ios = config(IOS) extend (common)
     lazy val android = config(ANDROID) extend (common)
+    lazy val web = config(WEB) extend (common)
     lazy val CustomCompile = config("compile") extend (ios, android, common)
   }
 
@@ -27,9 +28,10 @@ object SriPlatformPlugin extends AutoPlugin {
       scalaJSModuleKind := ModuleKind.CommonJSModule,
       ivyConfigurations := overrideConfigs(ios,
                                            android,
+                                           web,
                                            common,
                                            CustomCompile)(
         ivyConfigurations.value),
       scalaJSUseMainModuleInitializer := true
-    ) ++ buildConfig(android) ++ buildConfig(ios)
+    ) ++ buildConfig(android) ++ buildConfig(ios) ++ buildConfig(web)
 }

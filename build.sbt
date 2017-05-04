@@ -1,6 +1,6 @@
 name := "sbt-sri-platform"
 
-//version := "2017.4.0-SNAPSHOT"
+//version := "2017.5.0-SNAPSHOT"
 
 scalaVersion := "2.10.6"
 
@@ -27,7 +27,7 @@ bintrayRepository := "sbt-plugins"
 
 publishArtifact in Test := false
 
-addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.15")
+addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.16")
 
 //Test
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.0" % Test
