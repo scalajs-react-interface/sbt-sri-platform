@@ -3,9 +3,8 @@ package sri.sbt.platform
 import org.scalajs.core.tools.linker.backend.ModuleKind
 import sbt.Keys._
 import sbt._
-import org.scalajs.sbtplugin.ScalaJSPlugin.AutoImport._
+import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
 import org.scalajs.sbtplugin.ScalaJSPluginInternal
-import org.scalajs.sbtplugin.ScalaJSPluginInternal.scalaJSProjectBaseSettings
 
 object ConfigBuilder {
 
@@ -15,11 +14,11 @@ object ConfigBuilder {
 
   final val WEB = "web"
 
-  final val SJS_OUTPUT_PATH_ANDROID = "assets/scalajs-output-android.js"
+  final val SJS_OUTPUT_PATH_ANDROID = "assets/js/scalajs-output-android.js"
 
-  final val SJS_OUTPUT_PATH_IOS = "assets/scalajs-output-ios.js"
+  final val SJS_OUTPUT_PATH_IOS = "assets/js/scalajs-output-ios.js"
 
-  final val SJS_OUTPUT_PATH_WEB = "assets/scalajs-output-web.js"
+  final val SJS_OUTPUT_PATH_WEB = "assets/js/scalajs-output-web.js"
 
   val dev =
     Def.taskKey[Unit]("Generate mobile output file for fastOptJS")

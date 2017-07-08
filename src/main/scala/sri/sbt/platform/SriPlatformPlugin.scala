@@ -4,7 +4,6 @@ import ConfigBuilder._
 import org.scalajs.core.tools.linker.backend.ModuleKind
 import org.scalajs.sbtplugin.ScalaJSPlugin
 import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
-import org.scalajs.sbtplugin.impl.ScalaJSGroupID._
 import sbt.Keys.{defaultConfiguration, ivyConfigurations}
 import sbt.{AutoPlugin, Global, config, overrideConfigs}
 import sbt._
@@ -25,7 +24,7 @@ object SriPlatformPlugin extends AutoPlugin {
   override def projectSettings: Seq[_root_.sbt.Def.Setting[_]] =
     Seq(
       defaultConfiguration := Some(common),
-      scalaJSModuleKind := ModuleKind.CommonJSModule,
+      scalaJSLinkerConfig ~= (_.withModuleKind(ModuleKind.CommonJSModule)),
       ivyConfigurations := overrideConfigs(ios,
                                            android,
                                            web,
