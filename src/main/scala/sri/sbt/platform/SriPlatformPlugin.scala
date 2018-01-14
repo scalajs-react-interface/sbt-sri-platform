@@ -1,7 +1,6 @@
 package sri.sbt.platform
 
 import ConfigBuilder._
-import org.scalajs.core.tools.linker.backend.ModuleKind
 import org.scalajs.sbtplugin.ScalaJSPlugin
 import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
 import sbt.Keys.{defaultConfiguration, ivyConfigurations}
