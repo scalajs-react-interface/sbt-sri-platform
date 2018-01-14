@@ -61,6 +61,7 @@ object ConfigBuilder {
         artifactPath in fullOptJS := baseDirectory.value / aPath,
         dev := {
           val indexFile = baseDirectory.value / entryFile
+          IO.touch(indexFile, setModified = false)
           val indexContent = IO.read(indexFile)
           (fastOptJS in config).value.data
           val launcher = s"""require("./$aPath");"""
@@ -68,6 +69,7 @@ object ConfigBuilder {
         },
         prod := {
           val indexFile = baseDirectory.value / entryFile
+          IO.touch(indexFile, setModified = false)
           val indexContent = IO.read(indexFile)
           (fullOptJS in config).value.data
           val launcher = s"""require("./$aPath");"""
