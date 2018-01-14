@@ -1,10 +1,9 @@
 package sri.sbt.platform
 
-import org.scalajs.core.tools.linker.backend.ModuleKind
 import sbt.Keys._
 import sbt._
 import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
-import org.scalajs.sbtplugin.ScalaJSPluginInternal
+import org.scalajs.sbtplugin.ScalaJSPlugin
 
 object ConfigBuilder {
 
@@ -52,7 +51,7 @@ object ConfigBuilder {
     val entryFile = getEntryFileName(config)
     inConfig(config)(
       Defaults.compileSettings ++
-        ScalaJSPluginInternal.scalaJSCompileSettings ++ Seq(
+        ScalaJSPlugin.compileConfigSettings ++ Seq(
         discoveredMainClasses := (discoveredMainClasses in Compile).value,
         mainClass := (mainClass in Compile).value,
         console := (console in Compile).value,
@@ -62,6 +61,7 @@ object ConfigBuilder {
         artifactPath in fullOptJS := baseDirectory.value / aPath,
         dev := {
           val indexFile = baseDirectory.value / entryFile
+          IO.touch(indexFile, setModified = false)
           val indexContent = IO.read(indexFile)
           (fastOptJS in config).value.data
           val launcher = s"""require("./$aPath");"""
@@ -69,6 +69,7 @@ object ConfigBuilder {
         },
         prod := {
           val indexFile = baseDirectory.value / entryFile
+          IO.touch(indexFile, setModified = false)
           val indexContent = IO.read(indexFile)
           (fullOptJS in config).value.data
           val launcher = s"""require("./$aPath");"""
