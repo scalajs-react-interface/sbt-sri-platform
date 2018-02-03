@@ -27,7 +27,7 @@ bintrayRepository := "sbt-plugins"
 
 publishArtifact in Test := false
 
-addSbtPlugin("org.scala-js" % "sbt-scalajs" % "1.0.0-M2")
+addSbtPlugin("org.scala-js" % "sbt-scalajs" % "1.0.0-M3")
 
 //Test
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.0" % Test
